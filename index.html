@@ -6,9 +6,7 @@
 <title>AURA — AI 색감 이식</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
-
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
   :root {
     --bg: #09090f;
     --surface: #13131c;
@@ -20,7 +18,6 @@
     --text: #e8e8f0;
     --muted: #6b6b85;
   }
-
   html, body {
     min-height: 100vh;
     background: var(--bg);
@@ -29,418 +26,162 @@
     font-weight: 300;
     -webkit-tap-highlight-color: transparent;
   }
-
-  /* Stars bg */
   body::before {
     content: '';
-    position: fixed;
-    inset: 0;
+    position: fixed; inset: 0;
     background:
       radial-gradient(ellipse 80% 50% at 20% 10%, rgba(124,108,255,0.08) 0%, transparent 60%),
       radial-gradient(ellipse 60% 40% at 80% 80%, rgba(184,174,255,0.05) 0%, transparent 50%);
-    pointer-events: none;
-    z-index: 0;
+    pointer-events: none; z-index: 0;
   }
+  .app { position: relative; z-index: 1; max-width: 480px; margin: 0 auto; padding: 0 16px 100px; }
 
-  .app {
-    position: relative;
-    z-index: 1;
-    max-width: 480px;
-    margin: 0 auto;
-    padding: 0 16px 100px;
-  }
-
-  /* Header */
-  header {
-    padding: 40px 0 28px;
-    text-align: center;
-  }
-
+  header { padding: 40px 0 28px; text-align: center; }
   .logo {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 3.5rem;
+    font-family: 'Bebas Neue', sans-serif; font-size: 3.5rem;
     letter-spacing: 0.15em;
     background: linear-gradient(135deg, var(--accent2) 0%, var(--accent) 50%, #ff6cce 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    line-height: 1;
-    margin-bottom: 8px;
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    line-height: 1; margin-bottom: 8px;
   }
+  .tagline { font-size: 0.72rem; color: var(--muted); letter-spacing: 0.18em; text-transform: uppercase; }
 
-  .tagline {
-    font-size: 0.72rem;
-    color: var(--muted);
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-  }
-
-  /* Upload section */
-  .upload-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-    margin-bottom: 14px;
-  }
-
+  .upload-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; }
   .upload-box {
-    background: var(--surface);
-    border: 1.5px solid var(--border);
-    border-radius: 18px;
-    overflow: hidden;
-    cursor: pointer;
+    background: var(--surface); border: 1.5px solid var(--border);
+    border-radius: 18px; overflow: hidden; cursor: pointer;
     transition: border-color 0.2s, box-shadow 0.2s;
-    -webkit-tap-highlight-color: transparent;
   }
-
   .upload-box:active { opacity: 0.85; }
-
-  .upload-box.loaded {
-    border-color: var(--accent);
-    box-shadow: 0 0 0 1px var(--accent), 0 4px 24px rgba(124,108,255,0.15);
-  }
-
-  .box-top {
-    padding: 10px 12px 6px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-
+  .upload-box.loaded { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent), 0 4px 24px rgba(124,108,255,0.15); }
+  .box-top { padding: 10px 12px 6px; display: flex; align-items: center; gap: 8px; }
   .badge {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 0.85rem;
-    letter-spacing: 0.1em;
-    width: 24px; height: 24px;
-    border-radius: 8px;
-    display: flex; align-items: center; justify-content: center;
-    flex-shrink: 0;
+    font-family: 'Bebas Neue', sans-serif; font-size: 0.85rem; letter-spacing: 0.1em;
+    width: 24px; height: 24px; border-radius: 8px;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
   }
-
   .badge-a { background: var(--accent); color: white; }
   .badge-b { background: linear-gradient(135deg, #ff6cce, var(--accent)); color: white; }
-
   .box-label { font-size: 0.68rem; font-weight: 500; color: var(--text); }
   .box-sub   { font-size: 0.58rem; color: var(--muted); }
-
   .box-img {
-    width: 100%;
-    aspect-ratio: 1 / 1;
-    background: var(--surface2);
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-    overflow: hidden;
+    width: 100%; aspect-ratio: 1/1; background: var(--surface2);
+    position: relative; display: flex; flex-direction: column;
+    align-items: center; justify-content: center; gap: 6px; overflow: hidden;
   }
-
-  .box-img img {
-    position: absolute;
-    inset: 0; width: 100%; height: 100%;
-    object-fit: cover;
-    display: none;
-  }
-
+  .box-img img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: none; }
   .box-img img.show { display: block; }
-
-  .box-placeholder {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 5px;
-  }
-
   .box-icon { font-size: 1.8rem; opacity: 0.2; }
   .box-hint { font-size: 0.58rem; color: var(--muted); }
-
   input[type=file] { display: none; }
 
-  /* AI Analysis display */
-  .analysis-box {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 14px 16px;
-    margin-bottom: 14px;
-    display: none;
-  }
-
+  /* Analysis result */
+  .analysis-box { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 14px 16px; margin-bottom: 14px; display: none; }
   .analysis-box.show { display: block; }
+  .analysis-title { font-size: 0.58rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent2); margin-bottom: 8px; }
+  .stat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .stat-item { background: var(--surface2); border-radius: 10px; padding: 8px 10px; text-align: center; }
+  .stat-label { font-size: 0.55rem; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 4px; }
+  .stat-swatch { width: 28px; height: 28px; border-radius: 50%; margin: 0 auto 4px; border: 2px solid var(--border); }
+  .stat-val { font-family: 'Bebas Neue', sans-serif; font-size: 0.8rem; letter-spacing: 0.05em; color: var(--accent2); }
 
-  .analysis-title {
-    font-size: 0.58rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--accent2);
-    margin-bottom: 8px;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-  }
-
-  .analysis-title::before {
-    content: '✦';
-    font-size: 0.5rem;
-  }
-
-  .analysis-text {
-    font-size: 0.75rem;
-    color: var(--muted);
-    line-height: 1.7;
-  }
-
-  /* Filter values display */
-  .filter-chips {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-    margin-top: 10px;
-  }
-
-  .chip {
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 4px 10px;
-    font-size: 0.62rem;
-    color: var(--accent2);
-    font-family: monospace;
-  }
-
-  /* Strength slider */
-  .slider-panel {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 16px;
-    margin-bottom: 14px;
-  }
-
-  .slider-header {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 10px;
-  }
-
-  .slider-label { font-size: 0.7rem; font-weight: 500; }
-  .slider-val {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 0.9rem;
-    letter-spacing: 0.1em;
-    color: var(--accent2);
-  }
-
+  /* Sliders */
+  .slider-panel { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 16px; margin-bottom: 14px; }
+  .slider-section-title { font-size: 0.58rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent2); margin-bottom: 12px; }
+  .slider-row { margin-bottom: 14px; }
+  .slider-row:last-child { margin-bottom: 0; }
+  .slider-header { display: flex; justify-content: space-between; margin-bottom: 8px; }
+  .slider-label { font-size: 0.68rem; font-weight: 400; color: var(--text); }
+  .slider-val { font-family: 'Bebas Neue', sans-serif; font-size: 0.85rem; letter-spacing: 0.1em; color: var(--accent2); }
   input[type=range] {
-    -webkit-appearance: none;
-    width: 100%;
-    height: 3px;
-    background: var(--border);
-    border-radius: 2px;
-    outline: none;
-    cursor: pointer;
+    -webkit-appearance: none; width: 100%; height: 3px;
+    background: var(--border); border-radius: 2px; outline: none; cursor: pointer;
   }
-
   input[type=range]::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    width: 20px; height: 20px;
-    border-radius: 50%;
-    background: var(--accent);
-    border: 3px solid var(--bg);
+    -webkit-appearance: none; width: 20px; height: 20px; border-radius: 50%;
+    background: var(--accent); border: 3px solid var(--bg);
     box-shadow: 0 0 8px rgba(124,108,255,0.5);
   }
 
-  /* Buttons */
-  .analyze-btn {
-    width: 100%;
-    padding: 18px;
+  .apply-btn {
+    width: 100%; padding: 18px;
     background: linear-gradient(135deg, var(--accent), #9b6cff);
-    color: white;
-    border: none;
-    border-radius: 16px;
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.1rem;
-    letter-spacing: 0.15em;
-    cursor: pointer;
-    margin-bottom: 14px;
-    transition: opacity 0.15s, transform 0.1s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
+    color: white; border: none; border-radius: 16px;
+    font-family: 'Bebas Neue', sans-serif; font-size: 1.1rem; letter-spacing: 0.15em;
+    cursor: pointer; margin-bottom: 14px; transition: opacity 0.15s, transform 0.1s;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
   }
+  .apply-btn:active { transform: scale(0.97); }
+  .apply-btn:disabled { opacity: 0.35; cursor: not-allowed; transform: none; }
 
-  .analyze-btn:active { transform: scale(0.97); }
-  .analyze-btn:disabled { opacity: 0.35; cursor: not-allowed; transform: none; }
-
-  /* Result */
   .result-section { display: none; }
   .result-section.show { display: block; }
-
-  .result-label {
-    font-size: 0.6rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--green);
-    margin-bottom: 10px;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-  }
-
-  .dot-green {
-    width: 6px; height: 6px;
-    border-radius: 50%;
-    background: var(--green);
-    animation: blink 1.5s infinite;
-  }
-
+  .result-label { font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--green); margin-bottom: 10px; display: flex; align-items: center; gap: 6px; }
+  .dot-green { width: 6px; height: 6px; border-radius: 50%; background: var(--green); animation: blink 1.5s infinite; }
   @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.2} }
-
-  .result-img-wrap {
-    background: var(--surface);
-    border: 1.5px solid var(--border);
-    border-radius: 18px;
-    overflow: hidden;
-    margin-bottom: 12px;
-  }
-
-  #resultImg {
-    width: 100%;
-    height: auto;
-    display: block;
-  }
-
-  .compare-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 8px;
-    margin-bottom: 12px;
-  }
-
+  .result-img-wrap { background: var(--surface); border: 1.5px solid var(--border); border-radius: 18px; overflow: hidden; margin-bottom: 12px; }
+  #resultCanvas { width: 100%; height: auto; display: block; }
+  .compare-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 12px; }
   .cmp-btn {
-    padding: 12px;
-    border-radius: 12px;
-    border: 1.5px solid var(--border);
-    background: transparent;
-    font-family: 'Noto Sans KR', sans-serif;
-    font-size: 0.68rem;
-    font-weight: 500;
-    color: var(--muted);
-    cursor: pointer;
-    transition: all 0.15s;
-    -webkit-tap-highlight-color: transparent;
+    padding: 12px; border-radius: 12px; border: 1.5px solid var(--border);
+    background: transparent; font-family: 'Noto Sans KR', sans-serif;
+    font-size: 0.68rem; font-weight: 500; color: var(--muted); cursor: pointer; transition: all 0.15s;
   }
-
-  .cmp-btn.on {
-    background: var(--surface2);
-    border-color: var(--accent);
-    color: var(--accent2);
-  }
-
+  .cmp-btn.on { background: var(--surface2); border-color: var(--accent); color: var(--accent2); }
   .save-btn {
-    width: 100%;
-    padding: 18px;
-    background: var(--surface);
-    border: 1.5px solid var(--accent);
-    border-radius: 16px;
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 1rem;
-    letter-spacing: 0.15em;
-    color: var(--accent2);
-    cursor: pointer;
-    transition: background 0.15s, transform 0.1s;
-    -webkit-tap-highlight-color: transparent;
+    width: 100%; padding: 18px;
+    background: var(--surface); border: 1.5px solid var(--accent);
+    border-radius: 16px; font-family: 'Bebas Neue', sans-serif;
+    font-size: 1rem; letter-spacing: 0.15em; color: var(--accent2);
+    cursor: pointer; transition: background 0.15s, transform 0.1s;
   }
-
   .save-btn:active { transform: scale(0.97); background: var(--surface2); }
 
-  /* Loading */
   .loading-wrap {
-    position: fixed;
-    inset: 0;
-    background: rgba(9,9,15,0.88);
-    backdrop-filter: blur(8px);
-    display: none;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    gap: 20px;
-    z-index: 100;
+    position: fixed; inset: 0; background: rgba(9,9,15,0.88);
+    backdrop-filter: blur(8px); display: none;
+    align-items: center; justify-content: center;
+    flex-direction: column; gap: 20px; z-index: 100;
   }
-
   .loading-wrap.show { display: flex; }
-
   .ai-ring {
-    width: 52px; height: 52px;
-    border-radius: 50%;
+    width: 52px; height: 52px; border-radius: 50%;
     border: 3px solid var(--border);
-    border-top-color: var(--accent);
-    border-right-color: #ff6cce;
+    border-top-color: var(--accent); border-right-color: #ff6cce;
     animation: spin 0.9s linear infinite;
   }
-
   @keyframes spin { to { transform: rotate(360deg); } }
+  .loading-msg { font-size: 0.78rem; color: var(--muted); letter-spacing: 0.1em; text-align: center; }
+  .loading-step { font-family: 'Bebas Neue', sans-serif; font-size: 1rem; letter-spacing: 0.15em; color: var(--accent2); }
 
-  .loading-msg {
-    font-size: 0.78rem;
-    color: var(--muted);
-    letter-spacing: 0.1em;
-    text-align: center;
-  }
-
-  .loading-step {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 1rem;
-    letter-spacing: 0.15em;
-    color: var(--accent2);
-  }
-
-  /* Hidden canvas */
-  #offCanvas { display: none; }
+  canvas.off { display: none; }
 </style>
 </head>
 <body>
-
 <div class="app">
   <header>
     <div class="logo">AURA</div>
-    <div class="tagline">AI 색감 이식 · Color Grading</div>
+    <div class="tagline">색감 이식 · Color Grading</div>
   </header>
 
-  <!-- Upload -->
   <div class="upload-row">
     <div class="upload-box" id="boxA">
       <div class="box-top">
         <div class="badge badge-a">A</div>
-        <div>
-          <div class="box-label">내 사진</div>
-          <div class="box-sub">보정할 원본</div>
-        </div>
+        <div><div class="box-label">내 사진</div><div class="box-sub">보정할 원본</div></div>
       </div>
       <div class="box-img">
-        <div class="box-placeholder">
-          <div class="box-icon">📷</div>
-          <div class="box-hint">탭하여 선택</div>
-        </div>
+        <div><div class="box-icon">📷</div><div class="box-hint">탭하여 선택</div></div>
         <img id="imgA">
       </div>
     </div>
-
     <div class="upload-box" id="boxB">
       <div class="box-top">
         <div class="badge badge-b">B</div>
-        <div>
-          <div class="box-label">레퍼런스</div>
-          <div class="box-sub">원하는 색감</div>
-        </div>
+        <div><div class="box-label">레퍼런스</div><div class="box-sub">원하는 색감</div></div>
       </div>
       <div class="box-img">
-        <div class="box-placeholder">
-          <div class="box-icon">🎨</div>
-          <div class="box-hint">탭하여 선택</div>
-        </div>
+        <div><div class="box-icon">🎨</div><div class="box-hint">탭하여 선택</div></div>
         <img id="imgB">
       </div>
     </div>
@@ -449,31 +190,44 @@
   <input type="file" id="fileA" accept="image/*">
   <input type="file" id="fileB" accept="image/*">
 
-  <!-- AI analysis result -->
+  <!-- 색감 분석 결과 -->
   <div class="analysis-box" id="analysisBox">
-    <div class="analysis-title">AI 색감 분석</div>
-    <div class="analysis-text" id="analysisText"></div>
-    <div class="filter-chips" id="filterChips"></div>
+    <div class="analysis-title">✦ 레퍼런스 색감 분석</div>
+    <div class="stat-grid" id="statGrid"></div>
   </div>
 
-  <!-- Strength -->
+  <!-- 슬라이더 -->
   <div class="slider-panel">
-    <div class="slider-header">
-      <span class="slider-label">색감 이식 강도</span>
-      <span class="slider-val" id="sVal">80%</span>
+    <div class="slider-section-title">조정</div>
+    <div class="slider-row">
+      <div class="slider-header">
+        <span class="slider-label">색감 이식 강도</span>
+        <span class="slider-val" id="sStrength">80%</span>
+      </div>
+      <input type="range" id="rStrength" min="0" max="100" value="80">
     </div>
-    <input type="range" id="strengthRange" min="0" max="100" value="80">
+    <div class="slider-row">
+      <div class="slider-header">
+        <span class="slider-label">밝기 보정</span>
+        <span class="slider-val" id="sBright">0</span>
+      </div>
+      <input type="range" id="rBright" min="-60" max="60" value="0">
+    </div>
+    <div class="slider-row">
+      <div class="slider-header">
+        <span class="slider-label">대비</span>
+        <span class="slider-val" id="sContrast">100%</span>
+      </div>
+      <input type="range" id="rContrast" min="60" max="160" value="100">
+    </div>
   </div>
 
-  <button class="analyze-btn" id="analyzeBtn" disabled>
-    ✦ AI 색감 분석 &amp; 적용
-  </button>
+  <button class="apply-btn" id="applyBtn" disabled>✦ 색감 이식하기</button>
 
-  <!-- Result -->
   <div class="result-section" id="resultSection">
     <div class="result-label"><div class="dot-green"></div>완성</div>
     <div class="result-img-wrap">
-      <img id="resultImg">
+      <canvas id="resultCanvas"></canvas>
     </div>
     <div class="compare-row">
       <button class="cmp-btn on" id="btnAfter">보정 후</button>
@@ -483,268 +237,245 @@
   </div>
 </div>
 
-<!-- Loading -->
 <div class="loading-wrap" id="loadingWrap">
   <div class="ai-ring"></div>
-  <div class="loading-step" id="loadingStep">AI 분석 중</div>
-  <div class="loading-msg" id="loadingMsg">레퍼런스 색감을 읽고 있어요...</div>
+  <div class="loading-step" id="loadingStep">분석 중</div>
+  <div class="loading-msg" id="loadingMsg">색감을 읽고 있어요...</div>
 </div>
 
-<canvas id="offCanvas"></canvas>
+<canvas class="off" id="offA"></canvas>
+<canvas class="off" id="offB"></canvas>
 
 <script>
 let rawA = null, rawB = null;
-let b64A = null, b64B = null;
-let currentFilter = '';
 let showingAfter = true;
-let originalSrc = '';
-let resultSrc = '';
+let lastResultData = null;
+let lastOriginalData = null;
 
-const boxA = document.getElementById('boxA');
-const boxB = document.getElementById('boxB');
-const fileA = document.getElementById('fileA');
-const fileB = document.getElementById('fileB');
-const imgAEl = document.getElementById('imgA');
-const imgBEl = document.getElementById('imgB');
-const analyzeBtn = document.getElementById('analyzeBtn');
-const strengthRange = document.getElementById('strengthRange');
-const sVal = document.getElementById('sVal');
-const analysisBox = document.getElementById('analysisBox');
-const analysisText = document.getElementById('analysisText');
-const filterChips = document.getElementById('filterChips');
-const resultSection = document.getElementById('resultSection');
-const resultImg = document.getElementById('resultImg');
-const loadingWrap = document.getElementById('loadingWrap');
-const loadingStep = document.getElementById('loadingStep');
-const loadingMsg = document.getElementById('loadingMsg');
-const btnAfter = document.getElementById('btnAfter');
-const btnBefore = document.getElementById('btnBefore');
-const saveBtn = document.getElementById('saveBtn');
-const offCanvas = document.getElementById('offCanvas');
+const $ = id => document.getElementById(id);
 
-// Upload handlers
-boxA.addEventListener('click', () => fileA.click());
-boxB.addEventListener('click', () => fileB.click());
+$('boxA').onclick = () => $('fileA').click();
+$('boxB').onclick = () => $('fileB').click();
+$('fileA').onchange = () => loadImg($('fileA').files[0], 'A');
+$('fileB').onchange = () => loadImg($('fileB').files[0], 'B');
 
-fileA.addEventListener('change', () => loadImg(fileA.files[0], 'A'));
-fileB.addEventListener('change', () => loadImg(fileB.files[0], 'B'));
-
-strengthRange.addEventListener('input', () => {
-  sVal.textContent = strengthRange.value + '%';
-  if (resultSrc && currentFilter) applyFilterToImage(currentFilter, parseInt(strengthRange.value));
+// Slider labels
+const sliders = [
+  { range: 'rStrength', val: 'sStrength', suffix: '%' },
+  { range: 'rBright',   val: 'sBright',   suffix: '' },
+  { range: 'rContrast', val: 'sContrast', suffix: '%' },
+];
+sliders.forEach(s => {
+  $(s.range).oninput = () => { $(s.val).textContent = $(s.range).value + s.suffix; };
 });
 
 function loadImg(file, which) {
   if (!file) return;
-  const reader = new FileReader();
-  reader.onload = (e) => {
-    const dataUrl = e.target.result;
-    const base64 = dataUrl.split(',')[1];
-    const img = new Image();
-    img.onload = () => {
-      if (which === 'A') {
-        rawA = img;
-        b64A = base64;
-        imgAEl.src = dataUrl;
-        imgAEl.classList.add('show');
-        boxA.classList.add('loaded');
-        originalSrc = dataUrl;
-      } else {
-        rawB = img;
-        b64B = base64;
-        imgBEl.src = dataUrl;
-        imgBEl.classList.add('show');
-        boxB.classList.add('loaded');
-      }
-      if (rawA && rawB) analyzeBtn.disabled = false;
-    };
-    img.src = dataUrl;
+  const url = URL.createObjectURL(file);
+  const img = new Image();
+  img.onload = () => {
+    if (which === 'A') {
+      rawA = img;
+      $('imgA').src = url; $('imgA').classList.add('show');
+      $('boxA').classList.add('loaded');
+    } else {
+      rawB = img;
+      $('imgB').src = url; $('imgB').classList.add('show');
+      $('boxB').classList.add('loaded');
+      analyzeRef(img);
+    }
+    if (rawA && rawB) $('applyBtn').disabled = false;
   };
-  reader.readAsDataURL(file);
+  img.src = url;
 }
 
-// --- Main: Analyze with Claude API ---
-analyzeBtn.addEventListener('click', async () => {
-  if (!rawA || !rawB) return;
-  showLoading('AI 분석 중', '레퍼런스 색감을 읽고 있어요...');
+// ── 레퍼런스 분석 & 통계 표시 ──────────────────────────
+function analyzeRef(img) {
+  const c = $('offB');
+  const scale = Math.min(1, 300 / Math.max(img.naturalWidth, img.naturalHeight));
+  c.width  = Math.round(img.naturalWidth  * scale);
+  c.height = Math.round(img.naturalHeight * scale);
+  const ctx = c.getContext('2d');
+  ctx.drawImage(img, 0, 0, c.width, c.height);
+  const d = ctx.getImageData(0, 0, c.width, c.height).data;
 
-  try {
-    // Resize images for API (max 800px to save tokens)
-    const b64ASmall = resizeToBase64(rawA, 800);
-    const b64BSmall = resizeToBase64(rawB, 600);
+  let rS=0,gS=0,bS=0, n=d.length/4;
+  for (let i=0;i<d.length;i+=4){ rS+=d[i]; gS+=d[i+1]; bS+=d[i+2]; }
+  const rM=rS/n, gM=gS/n, bM=bS/n;
 
-    setLoadingMsg('AI 분석 중', '색감 특성을 추출하고 있어요...');
+  // Dominant tone label
+  const warmth = (rM - bM);
+  const toneLabel = warmth > 25 ? '따뜻한 웜톤' : warmth < -20 ? '차가운 쿨톤' : '중성 뉴트럴';
+  const bright = ((rM+gM+bM)/3);
+  const brightLabel = bright > 180 ? '밝은 하이키' : bright < 80 ? '어두운 로우키' : '자연스러운 미드톤';
 
-    const prompt = `You are a professional photo color grading AI. 
-Analyze the REFERENCE image (B) and determine CSS filter values to replicate its color mood onto another photo.
+  const grid = $('statGrid');
+  grid.innerHTML = '';
+  const items = [
+    { label: '주조색', swatch: `rgb(${Math.round(rM)},${Math.round(gM)},${Math.round(bM)})`, val: toneLabel },
+    { label: '밝기감', swatch: `rgb(${Math.round(bright)},${Math.round(bright)},${Math.round(bright)})`, val: brightLabel },
+    { label: 'R·G·B', swatch: `rgb(${Math.round(rM)},${Math.round(gM)},${Math.round(bM)})`, val: `${Math.round(rM)}·${Math.round(gM)}·${Math.round(bM)}` },
+  ];
+  items.forEach(item => {
+    const el = document.createElement('div');
+    el.className = 'stat-item';
+    el.innerHTML = `<div class="stat-label">${item.label}</div><div class="stat-swatch" style="background:${item.swatch}"></div><div class="stat-val">${item.val}</div>`;
+    grid.appendChild(el);
+  });
+  $('analysisBox').classList.add('show');
+}
 
-Return ONLY valid JSON, no markdown, no explanation:
-{
-  "description": "한국어로 2문장 이내 색감 설명",
-  "filters": {
-    "brightness": <number 70-130, default 100>,
-    "contrast": <number 70-140, default 100>,
-    "saturate": <number 0-200, default 100>,
-    "hueRotate": <number -30 to 30, default 0>,
-    "sepia": <number 0-80, default 0>,
-    "warmth": <number -20 to 20, default 0, positive=warm orange shift, negative=cool blue shift>
+// ── 히스토그램 누적 분포 함수 ──────────────────────────
+function buildCDF(channel) {
+  const hist = new Float32Array(256);
+  for (let v of channel) hist[v]++;
+  const cdf = new Float32Array(256);
+  cdf[0] = hist[0];
+  for (let i=1;i<256;i++) cdf[i] = cdf[i-1] + hist[i];
+  const total = cdf[255];
+  for (let i=0;i<256;i++) cdf[i] /= total;
+  return cdf;
+}
+
+function buildLUT(srcCDF, refCDF) {
+  const lut = new Uint8Array(256);
+  for (let s=0;s<256;s++) {
+    let best=0, bestDiff=Infinity;
+    for (let r=0;r<256;r++) {
+      const diff = Math.abs(srcCDF[s] - refCDF[r]);
+      if (diff < bestDiff) { bestDiff = diff; best = r; }
+    }
+    lut[s] = best;
   }
+  return lut;
 }
 
-Base the values on the reference image's actual color characteristics. Be precise.`;
+function extractChannel(data, ch) {
+  const arr = new Uint8Array(data.length / 4);
+  for (let i=0,j=0; i<data.length; i+=4,j++) arr[j] = data[i+ch];
+  return arr;
+}
 
-    const response = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 1000,
-        messages: [{
-          role: 'user',
-          content: [
-            {
-              type: 'image',
-              source: { type: 'base64', media_type: 'image/jpeg', data: b64BSmall }
-            },
-            { type: 'text', text: prompt }
-          ]
-        }]
-      })
-    });
+// ── 메인 적용 ──────────────────────────────────────────
+$('applyBtn').onclick = async () => {
+  showLoad('처리 중', '색감 분석 중...');
+  await tick();
 
-    const data = await response.json();
-    const raw = data.content.map(c => c.text || '').join('');
-    const clean = raw.replace(/```json|```/g, '').trim();
-    const parsed = JSON.parse(clean);
+  const strength  = parseInt($('rStrength').value) / 100;
+  const brightAdj = parseInt($('rBright').value);
+  const contrast  = parseInt($('rContrast').value) / 100;
 
-    currentFilter = parsed.filters;
+  // Source canvas (full res, max 2000px)
+  const srcC = $('offA');
+  const maxW = 2000;
+  const scaleA = Math.min(1, maxW / Math.max(rawA.naturalWidth, rawA.naturalHeight));
+  srcC.width  = Math.round(rawA.naturalWidth  * scaleA);
+  srcC.height = Math.round(rawA.naturalHeight * scaleA);
+  const ctxA = srcC.getContext('2d');
+  ctxA.drawImage(rawA, 0, 0, srcC.width, srcC.height);
+  const srcImgData = ctxA.getImageData(0, 0, srcC.width, srcC.height);
 
-    // Show analysis
-    analysisText.textContent = parsed.description;
-    filterChips.innerHTML = '';
-    const f = parsed.filters;
-    const labels = {
-      brightness: `밝기 ${f.brightness}`,
-      contrast: `대비 ${f.contrast}`,
-      saturate: `채도 ${f.saturate}`,
-      hueRotate: `색조 ${f.hueRotate > 0 ? '+' : ''}${f.hueRotate}°`,
-      sepia: `세피아 ${f.sepia}`,
-    };
-    Object.entries(labels).forEach(([k, v]) => {
-      const chip = document.createElement('div');
-      chip.className = 'chip';
-      chip.textContent = v;
-      filterChips.appendChild(chip);
-    });
-    analysisBox.classList.add('show');
+  // Ref canvas (downsized for speed)
+  const refC = $('offB');
+  const scaleB = Math.min(1, 400 / Math.max(rawB.naturalWidth, rawB.naturalHeight));
+  refC.width  = Math.round(rawB.naturalWidth  * scaleB);
+  refC.height = Math.round(rawB.naturalHeight * scaleB);
+  const ctxB = refC.getContext('2d');
+  ctxB.drawImage(rawB, 0, 0, refC.width, refC.height);
+  const refImgData = ctxB.getImageData(0, 0, refC.width, refC.height);
 
-    setLoadingMsg('색감 적용 중', '원본 사진에 색감을 입히고 있어요...');
+  setLoad('처리 중', 'LUT 생성 중...');
+  await tick();
 
-    // Apply filter
-    await applyFilterToImage(currentFilter, parseInt(strengthRange.value));
+  // Build LUTs per channel
+  const srcR = extractChannel(srcImgData.data, 0);
+  const srcG = extractChannel(srcImgData.data, 1);
+  const srcB = extractChannel(srcImgData.data, 2);
+  const refR = extractChannel(refImgData.data, 0);
+  const refG = extractChannel(refImgData.data, 1);
+  const refB = extractChannel(refImgData.data, 2);
 
-    resultSection.classList.add('show');
-    resultSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    showingAfter = true;
-    btnAfter.classList.add('on');
-    btnBefore.classList.remove('on');
+  const lutR = buildLUT(buildCDF(srcR), buildCDF(refR));
+  const lutG = buildLUT(buildCDF(srcG), buildCDF(refG));
+  const lutB = buildLUT(buildCDF(srcB), buildCDF(refB));
 
-  } catch (err) {
-    console.error(err);
-    alert('오류가 발생했어요: ' + err.message);
-  } finally {
-    hideLoading();
+  setLoad('처리 중', '픽셀 적용 중...');
+  await tick();
+
+  // Apply
+  const out = new Uint8ClampedArray(srcImgData.data);
+  const mid = 128;
+
+  for (let i=0; i<out.length; i+=4) {
+    let r = out[i], g = out[i+1], b = out[i+2];
+
+    // Histogram match (full)
+    const mr = lutR[r], mg = lutG[g], mb = lutB[b];
+
+    // Blend by strength
+    r = Math.round(r + (mr - r) * strength);
+    g = Math.round(g + (mg - g) * strength);
+    b = Math.round(b + (mb - b) * strength);
+
+    // Brightness offset
+    r += brightAdj; g += brightAdj; b += brightAdj;
+
+    // Contrast around mid
+    r = Math.round((r - mid) * contrast + mid);
+    g = Math.round((g - mid) * contrast + mid);
+    b = Math.round((b - mid) * contrast + mid);
+
+    out[i]   = clamp(r);
+    out[i+1] = clamp(g);
+    out[i+2] = clamp(b);
   }
-});
 
-function resizeToBase64(img, maxSize) {
-  const scale = Math.min(1, maxSize / Math.max(img.naturalWidth, img.naturalHeight));
-  const w = Math.round(img.naturalWidth * scale);
-  const h = Math.round(img.naturalHeight * scale);
-  offCanvas.width = w; offCanvas.height = h;
-  const ctx = offCanvas.getContext('2d');
-  ctx.drawImage(img, 0, 0, w, h);
-  return offCanvas.toDataURL('image/jpeg', 0.85).split(',')[1];
-}
+  // Draw result
+  const rc = $('resultCanvas');
+  rc.width  = srcC.width;
+  rc.height = srcC.height;
+  const ctxR = rc.getContext('2d');
+  ctxR.putImageData(new ImageData(out, srcC.width, srcC.height), 0, 0);
 
-async function applyFilterToImage(filters, strength) {
-  const t = strength / 100;
-  const f = filters;
+  lastResultData   = new ImageData(out, srcC.width, srcC.height);
+  lastOriginalData = srcImgData;
 
-  // Interpolate between neutral (100,100,100,0,0,0) and target
-  const br  = lerp(100, f.brightness, t);
-  const co  = lerp(100, f.contrast, t);
-  const sat = lerp(100, f.saturate, t);
-  const hr  = lerp(0, f.hueRotate, t);
-  const sep = lerp(0, f.sepia, t);
-
-  const filterStr = [
-    `brightness(${br}%)`,
-    `contrast(${co}%)`,
-    `saturate(${sat}%)`,
-    `hue-rotate(${hr}deg)`,
-    sep > 0 ? `sepia(${sep}%)` : '',
-  ].filter(Boolean).join(' ');
-
-  // Draw filtered image to canvas → blob URL
-  const maxW = 1800;
-  const scale = Math.min(1, maxW / rawA.naturalWidth);
-  const w = Math.round(rawA.naturalWidth * scale);
-  const h = Math.round(rawA.naturalHeight * scale);
-  offCanvas.width = w; offCanvas.height = h;
-  const ctx = offCanvas.getContext('2d');
-  ctx.filter = filterStr;
-  ctx.drawImage(rawA, 0, 0, w, h);
-  ctx.filter = 'none';
-
-  resultSrc = offCanvas.toDataURL('image/png');
-  resultImg.src = resultSrc;
-}
-
-function lerp(a, b, t) {
-  return Math.round(a + (b - a) * t * 10) / 10;
-}
-
-// Compare
-btnAfter.addEventListener('click', () => {
-  if (!resultSrc) return;
+  $('resultSection').classList.add('show');
+  $('resultSection').scrollIntoView({ behavior: 'smooth', block: 'start' });
   showingAfter = true;
-  resultImg.src = resultSrc;
-  btnAfter.classList.add('on');
-  btnBefore.classList.remove('on');
-});
+  $('btnAfter').classList.add('on');
+  $('btnBefore').classList.remove('on');
 
-btnBefore.addEventListener('click', () => {
+  hideLoad();
+};
+
+function clamp(v) { return v < 0 ? 0 : v > 255 ? 255 : v; }
+function tick()   { return new Promise(r => setTimeout(r, 30)); }
+
+function showLoad(step, msg) { $('loadingStep').textContent=step; $('loadingMsg').textContent=msg; $('loadingWrap').classList.add('show'); }
+function setLoad(step, msg)  { $('loadingStep').textContent=step; $('loadingMsg').textContent=msg; }
+function hideLoad()           { $('loadingWrap').classList.remove('show'); }
+
+$('btnAfter').onclick = () => {
+  if (!lastResultData) return;
+  showingAfter = true;
+  $('resultCanvas').getContext('2d').putImageData(lastResultData, 0, 0);
+  $('btnAfter').classList.add('on'); $('btnBefore').classList.remove('on');
+};
+$('btnBefore').onclick = () => {
+  if (!lastOriginalData) return;
   showingAfter = false;
-  resultImg.src = originalSrc;
-  btnAfter.classList.remove('on');
-  btnBefore.classList.add('on');
-});
-
-// Save
-saveBtn.addEventListener('click', () => {
-  if (!resultSrc) return;
+  $('resultCanvas').getContext('2d').putImageData(lastOriginalData, 0, 0);
+  $('btnBefore').classList.add('on'); $('btnAfter').classList.remove('on');
+};
+$('saveBtn').onclick = () => {
+  if (!lastResultData) return;
+  $('resultCanvas').getContext('2d').putImageData(lastResultData, 0, 0);
   const a = document.createElement('a');
   a.download = 'aura_' + Date.now() + '.png';
-  a.href = resultSrc;
+  a.href = $('resultCanvas').toDataURL('image/png');
   a.click();
-});
-
-// Loading helpers
-function showLoading(step, msg) {
-  loadingStep.textContent = step;
-  loadingMsg.textContent = msg;
-  loadingWrap.classList.add('show');
-}
-
-function setLoadingMsg(step, msg) {
-  loadingStep.textContent = step;
-  loadingMsg.textContent = msg;
-}
-
-function hideLoading() {
-  loadingWrap.classList.remove('show');
-}
+};
 </script>
 </body>
 </html>
